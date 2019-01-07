@@ -3,6 +3,8 @@
 module Excercise1
     ( someFunc,
       is_older,
+      number_in_month,
+      number_in_months,
       MyDate(..) -- to export constructor & methods as well 
     ) where
 
@@ -35,3 +37,15 @@ is_older d1 d2
                           then True
                           else False
                   else False 
+
+-- take a list of dates and a month (i.e., an int) and returns
+-- how many dates in the list are in the given month
+number_in_month :: [MyDate] -> Integer -> Int
+number_in_month dates m = length $ filter (\x-> x == m) $ map (\d -> month d) dates
+
+-- take a list of dates and a list of months (i.e., an int list)
+-- and return the number of dates in the list of dates
+-- that are in any of the months in the list of months.
+-- Assume the list of months has no number repeated.
+number_in_months :: [MyDate] -> [Integer] -> [Int]
+number_in_months dates months = map (\x -> number_in_month dates x) months
