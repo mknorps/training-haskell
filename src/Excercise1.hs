@@ -5,6 +5,8 @@ module Excercise1
       is_older,
       number_in_month,
       number_in_months,
+      dates_in_month,
+      dates_in_months,
       MyDate(..) -- to export constructor & methods as well 
     ) where
 
@@ -21,10 +23,16 @@ instance Show MyDate where
         show (month d) ++ "-" ++
         show (year d)
 
+instance Eq MyDate where
+    x == y = day x == day y &&
+             month x == month y &&
+             year x == year y
+
+
 someFunc :: IO ()
 someFunc = print $ day $D 2018 12 24
 
--- check if the first date is older
+-- 1) check if the first date is older
 is_older :: MyDate -> MyDate -> Bool
 is_older d1 d2 
     | year d1 < year d2 = True
@@ -38,14 +46,32 @@ is_older d1 d2
                           else False
                   else False 
 
--- take a list of dates and a month (i.e., an int) and returns
+-- 2) take a list of dates and a month (i.e., an int) and returns
 -- how many dates in the list are in the given month
 number_in_month :: [MyDate] -> Integer -> Int
 number_in_month dates m = length $ filter (\x-> x == m) $ map (\d -> month d) dates
 
--- take a list of dates and a list of months (i.e., an int list)
+-- 3) take a list of dates and a list of months (i.e., an int list)
 -- and return the number of dates in the list of dates
 -- that are in any of the months in the list of months.
 -- Assume the list of months has no number repeated.
 number_in_months :: [MyDate] -> [Integer] -> [Int]
 number_in_months dates months = map (\x -> number_in_month dates x) months
+
+-- 4) take a list of dates and a month (i.e., an int) and return a
+-- list holding the dates from the argument list of dates that are in the month.
+-- The returned list should contain dates in the order they were originally given.
+dates_in_month :: [MyDate] -> Integer -> [MyDate]
+dates_in_month dates m = filter (\x -> month x == m) dates
+
+-- 5) take a list of dates and a list of month (i.e., an int list)
+-- and returns a list holding the dates from the argument list
+-- of dates that are in any of the months in the list of months.
+-- Assume the list of months has no number repeated.
+dates_in_months :: [MyDate] -> [Integer] -> [[MyDate]]
+dates_in_months dates months = map (\x -> dates_in_month dates x) months
+
+-- 6) take a list of strings and an int n and return the n th element of the
+-- list where the head of the list is 1 st
+get_nth :: [String] -> Int -> String
+get_nth l idx = "test"

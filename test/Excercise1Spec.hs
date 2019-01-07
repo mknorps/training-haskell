@@ -44,3 +44,22 @@ pExcercise1LibSpec = do
                      (([], [1, 2, 3]), [0, 0, 0]),
                      (([d1, d2, d3, d4, d5], [3, 4]), [0, 0])]
     mapM_ (`shouldSatisfy` uncurry (==)) correct
+  it "for dates_in_month"  $ do
+    let uc_dates_in_month = uncurry dates_in_month
+    let correct = map ( uc_dates_in_month *** \x -> x)
+                    [(([d1, d2, d3, d4, d5], 12), [d1, d2, d4, d5]),
+                     (([d1, d2, d3, d4, d5], 1), [d3]),
+                     (([d1, d2, d3, d4, d5], 4), []),
+                     (([d1, d2], 1), []),
+                     (([], 1), [])]
+    mapM_ (`shouldSatisfy` uncurry (==)) correct
+  it "for dates_in_months"  $ do
+    let uc_dates_in_months = uncurry dates_in_months
+    let correct = map ( uc_dates_in_months *** \x -> x)
+                    [(([d1, d2, d3, d4, d5], [12, 1]), [[d1, d2, d4, d5], [d3]]),
+                     (([d1, d2], [12, 1]), [[d1, d2], []]),
+                     (([d1, d2, d3], [1, 12, 3]), [[d3], [d1, d2], []]),
+                     (([], [1]), [[]]),
+                     (([], [1, 2, 3]), [[], [], []]),
+                     (([d1, d2, d3, d4, d5], [3, 4]), [[], []])]
+    mapM_ (`shouldSatisfy` uncurry (==)) correct
