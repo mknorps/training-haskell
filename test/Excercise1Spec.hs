@@ -74,4 +74,16 @@ pExcercise1LibSpec = do
                      ((xs, 6), Just "ffff"),
                      (([], 1), Nothing)]
     mapM_ (`shouldSatisfy` uncurry (==)) correct
+  it "for number_before_reaching_sum"  $ do
+    let uc = uncurry number_before_reaching_sum
+    let xs = [1, 2, 3, 4, 5]
+    let correct = map ( uc *** \x -> x)
+                    [((1, xs), 0),
+                     ((3, xs), 1),
+                     ((4, xs), 2),
+                     ((5, xs), 2),
+                     ((6, xs), 2),
+                     ((11, xs), 4),
+                     ((1, []), 0)]
+    mapM_ (`shouldSatisfy` uncurry (==)) correct
     

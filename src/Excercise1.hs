@@ -8,6 +8,7 @@ module Excercise1
       dates_in_month,
       dates_in_months,
       get_nth,
+      number_before_reaching_sum,
       MyDate(..) -- to export constructor & methods as well 
     ) where
 
@@ -19,15 +20,23 @@ data MyDate = D
       day :: Integer
     }
 
+months = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"]
+
 instance Show MyDate where
-    show d = show (day d) ++ "-" ++
-        show (month d) ++ "-" ++
+    show d = extractString (get_nth months (month d)) ++ " " ++
+        show (day d) ++ ", " ++
         show (year d)
 
 instance Eq MyDate where
     x == y = day x == day y &&
              month x == month y &&
              year x == year y
+
+extractString :: Maybe String -> String
+extractString mx = case mx of
+    Nothing -> ""
+    Just x -> x
 
 
 someFunc :: IO ()
@@ -74,8 +83,21 @@ dates_in_months dates months = map (\x -> dates_in_month dates x) months
 
 -- 6) take a list of strings and an int n and return the n th element of the
 -- list where the head of the list is 1 st
-get_nth :: [String] -> Int -> Maybe String
+get_nth :: [String] -> Integer -> Maybe String
 -- get_nth = xs !! n
 get_nth [] idx = Nothing
 get_nth xs 1 = Just $ head xs
 get_nth (x:xs) idx = get_nth xs (idx-1)
+
+-- 7) take an int called sum, which you can assume
+-- is positive, and an int list, which you can assume contains
+-- all positive numbers, and returns an int.
+-- You should return an int n such that the first n elements of the list
+-- add to less than sum, but the first n + 1 elements of the list add to sum or more.
+-- Assume the entire list sums to more than the passed in value;
+-- it is okay for an exception to occur if this is not the case. 
+number_before_reaching_sum :: Integer -> [Integer] -> Integer
+number_before_reaching_sum sum [] = 0
+number_before_reaching_sum sum xs
+    | sum <= (head xs) = 0
+    | otherwise = 1 + number_before_reaching_sum (sum - head xs) (tail xs)
