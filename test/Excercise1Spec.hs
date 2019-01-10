@@ -63,3 +63,15 @@ pExcercise1LibSpec = do
                      (([], [1, 2, 3]), [[], [], []]),
                      (([d1, d2, d3, d4, d5], [3, 4]), [[], []])]
     mapM_ (`shouldSatisfy` uncurry (==)) correct
+  it "for get_nth"  $ do
+    let uc_get_nth = uncurry get_nth
+    let xs = ["a", "b", "c", "dd", "eee", "ffff"]
+    let correct = map ( uc_get_nth *** \x -> x)
+                    [((xs, 1), Just "a" ),
+                     ((xs, 3), Just "c"),
+                     ((xs, 4), Just "dd"),
+                     ((xs, 5), Just "eee"),
+                     ((xs, 6), Just "ffff"),
+                     (([], 1), Nothing)]
+    mapM_ (`shouldSatisfy` uncurry (==)) correct
+    

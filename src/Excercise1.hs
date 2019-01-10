@@ -7,6 +7,7 @@ module Excercise1
       number_in_months,
       dates_in_month,
       dates_in_months,
+      get_nth,
       MyDate(..) -- to export constructor & methods as well 
     ) where
 
@@ -73,5 +74,8 @@ dates_in_months dates months = map (\x -> dates_in_month dates x) months
 
 -- 6) take a list of strings and an int n and return the n th element of the
 -- list where the head of the list is 1 st
-get_nth :: [String] -> Int -> String
-get_nth l idx = "test"
+get_nth :: [String] -> Int -> Maybe String
+-- get_nth = xs !! n
+get_nth [] idx = Nothing
+get_nth xs 1 = Just $ head xs
+get_nth (x:xs) idx = get_nth xs (idx-1)
