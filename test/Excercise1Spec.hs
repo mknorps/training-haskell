@@ -86,4 +86,23 @@ pExcercise1LibSpec = do
                      ((11, xs), 4),
                      ((1, []), 0)]
     mapM_ (`shouldSatisfy` uncurry (==)) correct
-    
+  it "for what_month"  $ do
+    let correct = map ( what_month *** \x -> x)
+                    [(1, 1),
+                     (31, 1),
+                     (32, 2),
+                     (59, 2),
+                     (60, 3),
+                     (180, 6),
+                     (190, 7),
+                     (365, 12)]
+    mapM_ (`shouldSatisfy` uncurry (==)) correct
+  it "for month_range"  $ do
+    let uc = uncurry month_range 
+    let correct = map ( uc *** \x -> x)
+                    [((1, 1), [1]),
+                     ((3, 1), []),
+                     ((30, 32), [1, 1, 2]),
+                     ((180, 190), [6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7]),
+                     ((365, 365), [12])]
+    mapM_ (`shouldSatisfy` uncurry (==)) correct

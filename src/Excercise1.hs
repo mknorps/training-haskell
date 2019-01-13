@@ -9,6 +9,9 @@ module Excercise1
       dates_in_months,
       get_nth,
       number_before_reaching_sum,
+      what_month,
+      month_range,
+      oldest,
       MyDate(..) -- to export constructor & methods as well 
     ) where
 
@@ -101,3 +104,24 @@ number_before_reaching_sum sum [] = 0
 number_before_reaching_sum sum xs
     | sum <= (head xs) = 0
     | otherwise = 1 + number_before_reaching_sum (sum - head xs) (tail xs)
+
+-- 8) take a day of year (i.e., an int between 1 and 365)
+-- and return what month that day is in
+what_month :: Integer -> Integer
+what_month day =
+    1 + number_before_reaching_sum day monthdays where
+        monthdays = [31,28,31,30,31,30,31,31,30,31,30,31]
+
+-- 9) takes two days of the year day1 and day2 and returns an int list
+-- [m1,m2,...,mn] where m1 is the month of day1, m2 is the month of
+-- day1+1, ..., and mn is the month of day day2.
+month_range :: Integer -> Integer -> [Integer]
+month_range day1 day2 = map what_month [day1..day2]
+
+-- 10) find an oldest date from a list
+oldest :: [MyDate] -> Maybe MyDate
+oldest dates 
+    | length dates == 0 = Nothing
+    | length dates == 1 = Just $ head dates
+    | otherwise = oldest_computed where
+        oldest_computed = Just $ D 1 2 3
