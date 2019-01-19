@@ -15,6 +15,9 @@ module Excercise1
       MyDate(..) -- to export constructor & methods as well 
     ) where
 
+
+import qualified Data.Set as S
+
 type D = MyDate
 data MyDate = D
     { 
@@ -67,9 +70,8 @@ number_in_month dates m = length $ filter (\x-> x == m) $ map (\d -> month d) da
 -- 3) take a list of dates and a list of months (i.e., an int list)
 -- and return the number of dates in the list of dates
 -- that are in any of the months in the list of months.
--- Assume the list of months has no number repeated.
 number_in_months :: [MyDate] -> [Integer] -> [Int]
-number_in_months dates months = map (\x -> number_in_month dates x) months
+number_in_months dates months = map (\x -> number_in_month dates x) (rmdups months)
 
 -- 4) take a list of dates and a month (i.e., an int) and return a
 -- list holding the dates from the argument list of dates that are in the month.
@@ -80,9 +82,8 @@ dates_in_month dates m = filter (\x -> month x == m) dates
 -- 5) take a list of dates and a list of month (i.e., an int list)
 -- and returns a list holding the dates from the argument list
 -- of dates that are in any of the months in the list of months.
--- Assume the list of months has no number repeated.
 dates_in_months :: [MyDate] -> [Integer] -> [[MyDate]]
-dates_in_months dates months = map (\x -> dates_in_month dates x) months
+dates_in_months dates months = map (\x -> dates_in_month dates x) (rmdups months)
 
 -- 6) take a list of strings and an int n and return the n th element of the
 -- list where the head of the list is 1 st
@@ -128,3 +129,10 @@ oldest (x:xs) =
             o | (is_older x a) = x | otherwise = a
         Nothing ->  Just x
     where oldest_rest = oldest xs
+
+
+-- remove duplicates
+-- https://stackoverflow.com/questions/16108714/removing-duplicates-from-a-list-in-haskell
+-- import qualified Data.Set as Set
+rmdups :: Ord a => [a] -> [a]
+rmdups = S.toList . S.fromList 

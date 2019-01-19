@@ -37,10 +37,10 @@ pExcercise1LibSpec = do
   it "for number_in_months"  $ do
     let uc_number_in_months = uncurry number_in_months
     let correct = map ( uc_number_in_months *** \x -> x)
-                    [(([d1, d2, d3, d4, d5], [12, 1]), [4, 1]),
-                     (([d1, d2], [12, 1]), [2, 0]),
-                     (([d1, d2, d3], [1, 12, 3]), [1, 2, 0]),
-                     (([], [1]), [0]),
+                    [(([d1, d2, d3, d4, d5], [12, 12, 1]), [1, 4]),
+                     (([d1, d2], [12, 1]), [0, 2]),
+                     (([d1, d2, d3], [1, 12, 3]), [1, 0,  2]),
+                     (([], [1, 1]), [0]),
                      (([], [1, 2, 3]), [0, 0, 0]),
                      (([d1, d2, d3, d4, d5], [3, 4]), [0, 0])]
     mapM_ (`shouldSatisfy` uncurry (==)) correct
@@ -56,11 +56,11 @@ pExcercise1LibSpec = do
   it "for dates_in_months"  $ do
     let uc_dates_in_months = uncurry dates_in_months
     let correct = map ( uc_dates_in_months *** \x -> x)
-                    [(([d1, d2, d3, d4, d5], [12, 1]), [[d1, d2, d4, d5], [d3]]),
-                     (([d1, d2], [12, 1]), [[d1, d2], []]),
-                     (([d1, d2, d3], [1, 12, 3]), [[d3], [d1, d2], []]),
+                    [(([d1, d2, d3, d4, d5], [12, 1]), [[d3], [d1, d2, d4, d5]]),
+                     (([d1, d2], [12, 1, 1]), [[], [d1, d2]]),
+                     (([d1, d2, d3], [1, 12, 3]), [[d3], [],  [d1, d2]]),
                      (([], [1]), [[]]),
-                     (([], [1, 2, 3]), [[], [], []]),
+                     (([], [1, 1, 2, 3]), [[], [], []]),
                      (([d1, d2, d3, d4, d5], [3, 4]), [[], []])]
     mapM_ (`shouldSatisfy` uncurry (==)) correct
   it "for get_nth"  $ do
