@@ -120,8 +120,11 @@ month_range day1 day2 = map what_month [day1..day2]
 
 -- 10) find an oldest date from a list
 oldest :: [MyDate] -> Maybe MyDate
-oldest dates 
-    | length dates == 0 = Nothing
-    | length dates == 1 = Just $ head dates
-    | otherwise = oldest_computed where
-        oldest_computed = Just $ D 1 2 3
+oldest [] = Nothing
+oldest (x:[]) = Just x
+oldest (x:xs) =
+    case oldest_rest of
+        Just a -> Just o where
+            o | (is_older x a) = x | otherwise = a
+        Nothing ->  Just x
+    where oldest_rest = oldest xs

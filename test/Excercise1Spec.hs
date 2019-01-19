@@ -106,3 +106,11 @@ pExcercise1LibSpec = do
                      ((180, 190), [6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7]),
                      ((365, 365), [12])]
     mapM_ (`shouldSatisfy` uncurry (==)) correct
+  it "for oldest"  $ do
+    let correct = map ( oldest *** \x -> x)
+                    [([], Nothing ),
+                    ([d1], Just d1),
+                    ([d1, d2], Just d2),
+                    ([d1, d2, d3, d4], Just d3),
+                    ([d1, d2, d3, d4, d5], Just d5)]
+    mapM_ (`shouldSatisfy` uncurry (==)) correct
